@@ -5,7 +5,7 @@ from sklearn import datasets, linear_model
 from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifier
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
-from matplotlib import pyplot as plt
+from sklearn.naive_bayes import GaussianNB
 
 if __name__ == '__main__':
     adultsData = pd.read_csv('adultsData.csv')
@@ -39,4 +39,21 @@ if __name__ == '__main__':
     print("Confusion Matrix:\n",results)
 
 	#Evaluating model accuracy
+    print("Accuracy:\n",metrics.classification_report(y_test, y_pred))
+
+    #Create a Gaussian Classifier
+    model = GaussianNB()
+
+    # Train the model using the training sets
+    model.fit(X_train, y_train)
+
+    #Predict Output
+    y_pred= model.predict(X_test)
+    print("Predicted Value:", y_pred)
+
+    #Generate confusion matrix for our results
+    results = metrics.confusion_matrix(y_test, y_pred)
+    print("Confusion Matrix:\n",results)
+
+    #Evaluating model accuracy
     print("Accuracy:\n",metrics.classification_report(y_test, y_pred))
