@@ -29,3 +29,12 @@ if __name__ == '__main__':
         lower_lim = carsDF[col].mean () - carsDF[col].std () * factor
         outliers[col] = carsDF[(carsDF[col] >= upper_lim) | (carsDF[col] <= lower_lim)]
         print("\n\nThe outliers for {0} are:\n{1}".format(col, outliers[col]))
+
+    #Problem 2, make boxlplots for target cols in bankloan data
+    bankLoanDF = bankLoanDF.dropna()
+    
+    Cols = ['x1', 'x5', 'x6', 'x7', 'x11', 'x13', 'x14']
+    for col in Cols:
+        boxplot = bankLoanDF.boxplot(column=[col])
+        plt.title("Boxplot for {0}".format(col))
+        plt.show()
