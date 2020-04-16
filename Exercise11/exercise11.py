@@ -19,3 +19,13 @@ if __name__ == '__main__':
     print('\n\nBank Loan Data')
     print(bankLoanDF.head())
 
+    #Problem 1, find outliers for mpg, qsec and hp for cars data
+    print("\n2. Calculating outliers for target columns, using anything above/below 2 stdv's.")
+    factor = 2
+    Cols = ['mpg', 'qsec', 'hp']
+    outliers = {}
+    for col in Cols:
+        upper_lim = carsDF[col].mean () + carsDF[col].std () * factor
+        lower_lim = carsDF[col].mean () - carsDF[col].std () * factor
+        outliers[col] = carsDF[(carsDF[col] >= upper_lim) | (carsDF[col] <= lower_lim)]
+        print("\n\nThe outliers for {0} are:\n{1}".format(col, outliers[col]))
