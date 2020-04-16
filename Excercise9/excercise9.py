@@ -10,3 +10,7 @@ if __name__ == '__main__':
     #Print preview of dataframe
     print("\n1. Checking and Reading the Data\n")
     print(potentialClientsDF.head())
+
+    #Plotting raw data
+    plt.plot(potentialClientsDF, 'x')
+    plt.show()
