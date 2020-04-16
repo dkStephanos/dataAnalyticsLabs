@@ -35,6 +35,7 @@ if __name__ == '__main__':
     
     Cols = ['x1', 'x5', 'x6', 'x7', 'x11', 'x13', 'x14']
     for col in Cols:
-        boxplot = bankLoanDF.boxplot(column=[col])
+        boxplot = bankLoanDF[col].to_frame().dropna().boxplot()
         plt.title("Boxplot for {0}".format(col))
         plt.show()
+
