@@ -7,6 +7,9 @@ from sklearn import metrics
 from scipy.spatial.distance import cdist 
 from scipy import cluster
 from sklearn.cluster import KMeans
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import MinMaxScaler
+
 
 if __name__ == '__main__':
     #Read in raw data, casting to float
@@ -30,12 +33,21 @@ if __name__ == '__main__':
         outliers[col] = carsDF[(carsDF[col] >= upper_lim) | (carsDF[col] <= lower_lim)]
         print("\n\nThe outliers for {0} are:\n{1}".format(col, outliers[col]))
 
-    #Problem 2, make boxlplots for target cols in bankloan data
-    bankLoanDF = bankLoanDF.dropna()
-    
+    #Problem 2, make boxlplots for target cols in bankloan data    
+    print("\n3. Generating boxplots for bank loan data")
     Cols = ['x1', 'x5', 'x6', 'x7', 'x11', 'x13', 'x14']
     for col in Cols:
         boxplot = bankLoanDF[col].to_frame().dropna().boxplot()
         plt.title("Boxplot for {0}".format(col))
         plt.show()
 
+    print("\n3. Getting top 10 outliers from clusters")
+    #scale the data to calculate distances
+    scaler = MinMaxScaler()
+    bankLoanSeries = scaler.fit_transform(bankLoanDF.fillna(0))
+    #Create clusters from dataset
+    outlier_detection = DBSCAN(min_samples = 2, eps = 1.13)
+    clusters = outlier_detection.fit_predict(bankLoanSeries)
+    #Trim dataframe to outliers as identified by cluster analysis
+    outliers = bankLoanDF.iloc[(clusters == -1).nonzero()]
+    print(outliers)
